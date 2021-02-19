@@ -1,5 +1,4 @@
-export declare const formatNumber: (num: number) => string | null;
-export declare const formatMoneyRounded: (num: number) => string | null;
-export declare const formatMoney: (num: number) => string | null;
-export declare const formatPercent: (num: number) => string | null;
-export declare const formatOrdinal: (num: number) => string | null;
+export declare const number_with_delimiter: (num: number) => string | null;
+export declare const rounded_currency: (num: number) => string | null;
+export declare const number_to_currency: (num: number) => string | null;
+export declare const number_to_ordinal: (num: number) => string | null;

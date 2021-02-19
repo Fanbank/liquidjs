@@ -2844,31 +2844,26 @@ function truncatewords(v, l = 15, o = '...') {
     return ret;
 }
 
-const formatNumber = (num) => {
+/* eslint-disable @typescript-eslint/camelcase */
+const number_with_delimiter = (num) => {
     if (num === null) {
         return null;
     }
     return numeral(num).format('0,0.0[0000]');
 };
-const formatMoneyRounded = (num) => {
+const rounded_currency = (num) => {
     if (num === null) {
         return null;
     }
-    return numeral(num).format('$0,0');
+    return numeral(Math.round(num)).format('$0,0');
 };
-const formatMoney = (num) => {
+const number_to_currency = (num) => {
     if (num === null) {
         return null;
     }
     return numeral(num).format('$0,0.00');
 };
-const formatPercent = (num) => {
-    if (num === null) {
-        return null;
-    }
-    return numeral(num / 100).format('0,0.0%');
-};
-const formatOrdinal = (num) => {
+const number_to_ordinal = (num) => {
     if (num === null) {
         return null;
     }
@@ -2927,11 +2922,10 @@ var builtinFilters = /*#__PURE__*/Object.freeze({
   replaceFirst: replaceFirst,
   truncate: truncate,
   truncatewords: truncatewords,
-  formatNumber: formatNumber,
-  formatMoneyRounded: formatMoneyRounded,
-  formatMoney: formatMoney,
-  formatPercent: formatPercent,
-  formatOrdinal: formatOrdinal
+  number_with_delimiter: number_with_delimiter,
+  rounded_currency: rounded_currency,
+  number_to_currency: number_to_currency,
+  number_to_ordinal: number_to_ordinal
 });
 
 class TagMap {

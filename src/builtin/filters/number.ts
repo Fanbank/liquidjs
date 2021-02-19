@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import numeral from 'numeral'
 
-export const formatNumber = (num: number) => {
+export const number_with_delimiter = (num: number) => {
   if (num === null) {
     return null
   }
@@ -8,15 +9,15 @@ export const formatNumber = (num: number) => {
   return numeral(num).format('0,0.0[0000]')
 }
 
-export const formatMoneyRounded = (num: number) => {
+export const rounded_currency = (num: number) => {
   if (num === null) {
     return null
   }
 
-  return numeral(num).format('$0,0')
+  return numeral(Math.round(num)).format('$0,0')
 }
 
-export const formatMoney = (num: number) => {
+export const number_to_currency = (num: number) => {
   if (num === null) {
     return null
   }
@@ -24,15 +25,7 @@ export const formatMoney = (num: number) => {
   return numeral(num).format('$0,0.00')
 }
 
-export const formatPercent = (num: number) => {
-  if (num === null) {
-    return null
-  }
-
-  return numeral(num / 100).format('0,0.0%')
-}
-
-export const formatOrdinal = (num: number) => {
+export const number_to_ordinal = (num: number) => {
   if (num === null) {
     return null
   }

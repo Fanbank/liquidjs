@@ -3685,31 +3685,26 @@
         return ret;
     }
 
-    var formatNumber = function (num) {
+    /* eslint-disable @typescript-eslint/camelcase */
+    var number_with_delimiter = function (num) {
         if (num === null) {
             return null;
         }
         return numeral(num).format('0,0.0[0000]');
     };
-    var formatMoneyRounded = function (num) {
+    var rounded_currency = function (num) {
         if (num === null) {
             return null;
         }
-        return numeral(num).format('$0,0');
+        return numeral(Math.round(num)).format('$0,0');
     };
-    var formatMoney = function (num) {
+    var number_to_currency = function (num) {
         if (num === null) {
             return null;
         }
         return numeral(num).format('$0,0.00');
     };
-    var formatPercent = function (num) {
-        if (num === null) {
-            return null;
-        }
-        return numeral(num / 100).format('0,0.0%');
-    };
-    var formatOrdinal = function (num) {
+    var number_to_ordinal = function (num) {
         if (num === null) {
             return null;
         }
@@ -3768,11 +3763,10 @@
         replaceFirst: replaceFirst,
         truncate: truncate,
         truncatewords: truncatewords,
-        formatNumber: formatNumber,
-        formatMoneyRounded: formatMoneyRounded,
-        formatMoney: formatMoney,
-        formatPercent: formatPercent,
-        formatOrdinal: formatOrdinal
+        number_with_delimiter: number_with_delimiter,
+        rounded_currency: rounded_currency,
+        number_to_currency: number_to_currency,
+        number_to_ordinal: number_to_ordinal
     });
 
     var TagMap = /** @class */ (function () {
