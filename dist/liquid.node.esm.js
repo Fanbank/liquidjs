@@ -3,15 +3,9 @@
  * (c) 2016-2021 harttle
  * Released under the MIT License.
  */
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var path = require('path');
-var fs$1 = require('fs');
-var numeral = _interopDefault(require('numeral'));
+import { extname, resolve as resolve$1 } from 'path';
+import { statSync, readFileSync as readFileSync$1, stat, readFile as readFile$1 } from 'fs';
+import numeral from 'numeral';
 
 class Drop {
     valueOf() {
@@ -231,8 +225,8 @@ class LRU {
     }
 }
 
-const statAsync = promisify(fs$1.stat);
-const readFileAsync = promisify(fs$1.readFile);
+const statAsync = promisify(stat);
+const readFileAsync = promisify(readFile$1);
 function exists(filepath) {
     return statAsync(filepath).then(() => true).catch(() => false);
 }
@@ -241,7 +235,7 @@ function readFile(filepath) {
 }
 function existsSync(filepath) {
     try {
-        fs$1.statSync(filepath);
+        statSync(filepath);
         return true;
     }
     catch (err) {
@@ -249,12 +243,12 @@ function existsSync(filepath) {
     }
 }
 function readFileSync(filepath) {
-    return fs$1.readFileSync(filepath, 'utf8');
+    return readFileSync$1(filepath, 'utf8');
 }
 function resolve(root, file, ext) {
-    if (!path.extname(file))
+    if (!extname(file))
         file += ext;
-    return path.resolve(root, file);
+    return resolve$1(root, file);
 }
 function fallback(file) {
     try {
@@ -3088,28 +3082,4 @@ class Liquid {
     }
 }
 
-exports.AssertionError = AssertionError;
-exports.Context = Context;
-exports.Drop = Drop;
-exports.Emitter = Emitter;
-exports.Expression = Expression;
-exports.Hash = Hash;
-exports.Liquid = Liquid;
-exports.ParseError = ParseError;
-exports.ParseStream = ParseStream;
-exports.TagToken = TagToken;
-exports.Token = Token;
-exports.TokenizationError = TokenizationError;
-exports.Tokenizer = Tokenizer;
-exports.TypeGuards = typeGuards;
-exports.Value = Value;
-exports.assert = assert;
-exports.createTrie = createTrie;
-exports.defaultOperators = defaultOperators;
-exports.evalQuotedToken = evalQuotedToken;
-exports.evalToken = evalToken;
-exports.isFalsy = isFalsy;
-exports.isTruthy = isTruthy;
-exports.toPromise = toPromise;
-exports.toThenable = toThenable;
-exports.toValue = toValue;
+export { AssertionError, Context, Drop, Emitter, Expression, Hash, Liquid, ParseError, ParseStream, TagToken, Token, TokenizationError, Tokenizer, typeGuards as TypeGuards, Value, assert, createTrie, defaultOperators, evalQuotedToken, evalToken, isFalsy, isTruthy, toPromise, toThenable, toValue };

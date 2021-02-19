@@ -4,10 +4,12 @@
  * Released under the MIT License.
  */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-    typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = global || self, factory(global.liquidjs = {}));
-}(this, function (exports) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('numeral')) :
+    typeof define === 'function' && define.amd ? define(['exports', 'numeral'], factory) :
+    (global = global || self, factory(global.liquidjs = {}, global.numeral));
+}(this, function (exports, numeral) { 'use strict';
+
+    numeral = numeral && numeral.hasOwnProperty('default') ? numeral['default'] : numeral;
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -3683,6 +3685,37 @@
         return ret;
     }
 
+    var formatNumber = function (num) {
+        if (num === null) {
+            return null;
+        }
+        return numeral(num).format('0,0.0[0000]');
+    };
+    var formatMoneyRounded = function (num) {
+        if (num === null) {
+            return null;
+        }
+        return numeral(num).format('$0,0');
+    };
+    var formatMoney = function (num) {
+        if (num === null) {
+            return null;
+        }
+        return numeral(num).format('$0,0.00');
+    };
+    var formatPercent = function (num) {
+        if (num === null) {
+            return null;
+        }
+        return numeral(num / 100).format('0,0.0%');
+    };
+    var formatOrdinal = function (num) {
+        if (num === null) {
+            return null;
+        }
+        return numeral(num).format('0o');
+    };
+
 
 
     var builtinFilters = /*#__PURE__*/Object.freeze({
@@ -3734,7 +3767,12 @@
         replace: replace,
         replaceFirst: replaceFirst,
         truncate: truncate,
-        truncatewords: truncatewords
+        truncatewords: truncatewords,
+        formatNumber: formatNumber,
+        formatMoneyRounded: formatMoneyRounded,
+        formatMoney: formatMoney,
+        formatPercent: formatPercent,
+        formatOrdinal: formatOrdinal
     });
 
     var TagMap = /** @class */ (function () {

@@ -3,15 +3,7 @@
  * (c) 2016-2021 harttle
  * Released under the MIT License.
  */
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var path = require('path');
-var fs$1 = require('fs');
-var numeral = _interopDefault(require('numeral'));
+import numeral from 'numeral';
 
 class Drop {
     valueOf() {
@@ -60,15 +52,6 @@ function isString(value) {
 }
 function isFunction(value) {
     return typeof value === 'function';
-}
-function promisify(fn) {
-    return function (...args) {
-        return new Promise((resolve, reject) => {
-            fn(...args, (err, result) => {
-                err ? reject(err) : resolve(result);
-            });
-        });
-    };
 }
 function stringify(value) {
     value = toValue(value);
@@ -231,45 +214,68 @@ class LRU {
     }
 }
 
-const statAsync = promisify(fs$1.stat);
-const readFileAsync = promisify(fs$1.readFile);
-function exists(filepath) {
-    return statAsync(filepath).then(() => true).catch(() => false);
+function domResolve(root, path) {
+    const base = document.createElement('base');
+    base.href = root;
+    const head = document.getElementsByTagName('head')[0];
+    head.insertBefore(base, head.firstChild);
+    const a = document.createElement('a');
+    a.href = path;
+    const resolved = a.href;
+    head.removeChild(base);
+    return resolved;
 }
-function readFile(filepath) {
-    return readFileAsync(filepath, 'utf8');
+function resolve(root, filepath, ext) {
+    if (root.length && last(root) !== '/')
+        root += '/';
+    const url = domResolve(root, filepath);
+    return url.replace(/^(\w+:\/\/[^/]+)(\/[^?]+)/, (str, origin, path) => {
+        const last = path.split('/').pop();
+        if (/\.\w+$/.test(last))
+            return str;
+        return origin + path + ext;
+    });
+}
+async function readFile(url) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                resolve(xhr.responseText);
+            }
+            else {
+                reject(new Error(xhr.statusText));
+            }
+        };
+        xhr.onerror = () => {
+            reject(new Error('An error occurred whilst receiving the response.'));
+        };
+        xhr.open('GET', url);
+        xhr.send();
+    });
+}
+function readFileSync(url) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);
+    xhr.send();
+    if (xhr.status < 200 || xhr.status >= 300) {
+        throw new Error(xhr.statusText);
+    }
+    return xhr.responseText;
+}
+async function exists(filepath) {
+    return true;
 }
 function existsSync(filepath) {
-    try {
-        fs$1.statSync(filepath);
-        return true;
-    }
-    catch (err) {
-        return false;
-    }
-}
-function readFileSync(filepath) {
-    return fs$1.readFileSync(filepath, 'utf8');
-}
-function resolve(root, file, ext) {
-    if (!path.extname(file))
-        file += ext;
-    return path.resolve(root, file);
-}
-function fallback(file) {
-    try {
-        return require.resolve(file);
-    }
-    catch (e) { }
+    return true;
 }
 
 var fs = /*#__PURE__*/Object.freeze({
-  exists: exists,
-  readFile: readFile,
-  existsSync: existsSync,
-  readFileSync: readFileSync,
   resolve: resolve,
-  fallback: fallback
+  readFile: readFile,
+  readFileSync: readFileSync,
+  exists: exists,
+  existsSync: existsSync
 });
 
 function isComparable(arg) {
@@ -3088,28 +3094,4 @@ class Liquid {
     }
 }
 
-exports.AssertionError = AssertionError;
-exports.Context = Context;
-exports.Drop = Drop;
-exports.Emitter = Emitter;
-exports.Expression = Expression;
-exports.Hash = Hash;
-exports.Liquid = Liquid;
-exports.ParseError = ParseError;
-exports.ParseStream = ParseStream;
-exports.TagToken = TagToken;
-exports.Token = Token;
-exports.TokenizationError = TokenizationError;
-exports.Tokenizer = Tokenizer;
-exports.TypeGuards = typeGuards;
-exports.Value = Value;
-exports.assert = assert;
-exports.createTrie = createTrie;
-exports.defaultOperators = defaultOperators;
-exports.evalQuotedToken = evalQuotedToken;
-exports.evalToken = evalToken;
-exports.isFalsy = isFalsy;
-exports.isTruthy = isTruthy;
-exports.toPromise = toPromise;
-exports.toThenable = toThenable;
-exports.toValue = toValue;
+export { AssertionError, Context, Drop, Emitter, Expression, Hash, Liquid, ParseError, ParseStream, TagToken, Token, TokenizationError, Tokenizer, typeGuards as TypeGuards, Value, assert, createTrie, defaultOperators, evalQuotedToken, evalToken, isFalsy, isTruthy, toPromise, toThenable, toValue };
