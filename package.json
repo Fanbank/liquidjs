@@ -17,47 +17,18 @@
     "integration": "mocha \"test/integration/**/*.ts\"",
     "e2e": "npm run build && mocha \"test/e2e/**/*.ts\"",
     "test": "cross-env BUNDLES=cjs,umd npm run build && mocha \"test/**/*.ts\"",
-    "benchmark": "node --expose-gc benchmark/index",
-    "coverage": "nyc --reporter=html mocha \"test/{unit,integration}/**/*.ts\"",
-    "coverage-coveralls": "nyc mocha \"test/{unit,integration}/**/*.ts\" && nyc report --reporter=text-lcov | coveralls",
     "build": "rm -rf dist && rollup -c rollup.config.ts && ls -lh dist",
     "build-docs": "bin/build-docs.sh",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "postinstall": "rollup -c rollup.config.tsd"
   },
   "bin": {
     "liquidjs": "./bin/liquid.js",
     "liquid": "./bin/liquid.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/harttle/liquidjs.git"
-  },
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/liquidjs"
-  },
-  "files": [
-    "bin/liquid.js",
-    "dist",
-    "LICENSE",
-    "README.md"
-  ],
   "engines": {
     "node": ">=4.8.7"
   },
-  "keywords": [
-    "liquid",
-    "template engine",
-    "express",
-    "jinja",
-    "shopify"
-  ],
-  "author": "Harttle",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/harttle/liquidjs/issues"
-  },
-  "homepage": "https://github.com/harttle/liquidjs#readme",
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
