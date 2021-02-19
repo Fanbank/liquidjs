@@ -19,8 +19,7 @@
     "test": "cross-env BUNDLES=cjs,umd npm run build && mocha \"test/**/*.ts\"",
     "build": "rm -rf dist && rollup -c rollup.config.ts && ls -lh dist",
     "build-docs": "bin/build-docs.sh",
-    "watch": "tsc --watch",
-    "postinstall": "rollup -c rollup.config.tsd"
+    "watch": "tsc --watch"
   },
   "bin": {
     "liquidjs": "./bin/liquid.js",
