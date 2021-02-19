@@ -29,6 +29,13 @@
   "engines": {
     "node": ">=4.8.7"
   },
+  "dependencies": {
+    "typescript": "^3.3.3",
+    "rollup": "^1.1.2",
+    "rollup-plugin-replace": "^2.1.0",
+    "rollup-plugin-typescript2": "^0.21.1",
+    "rollup-plugin-uglify": "^6.0.2"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
@@ -67,10 +74,6 @@
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
     "regenerator-runtime": "^0.12.1",
-    "rollup": "^1.1.2",
-    "rollup-plugin-replace": "^2.1.0",
-    "rollup-plugin-typescript2": "^0.21.1",
-    "rollup-plugin-uglify": "^6.0.2",
     "semantic-release": "^17.2.3",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
@@ -78,8 +81,7 @@
     "ts-node": "^8.0.2",
     "tslib": "^1.9.3",
     "typedoc": "^0.15.0",
-    "typedoc-plugin-markdown": "^2.2.17",
-    "typescript": "^3.3.3"
+    "typedoc-plugin-markdown": "^2.2.17"
   },
   "release": {
     "branch": "master",
@@ -112,6 +114,5 @@
       "pre-commit": "npm run check",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  },
-  "dependencies": {}
+  }
 }
